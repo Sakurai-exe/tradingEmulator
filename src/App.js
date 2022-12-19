@@ -17,7 +17,7 @@ function App() {
 	}, []);
 
 	return (
-		<div className={styles.app}>
+		<div className={styles.App}>
 			<div className={styles.app__wrapper}>
 				<nav>
 					<div className={styles.nav__element}>
