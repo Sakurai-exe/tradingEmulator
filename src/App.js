@@ -1,8 +1,21 @@
 import styles from "./App.module.scss";
 // import Archive from "./Archive/Archive";
 import Trading from "./Trading/Trading";
+import { useState, useEffect } from "react";
 
 function App() {
+	const [date, setDate] = useState(new Date());
+
+	function refreshClock() {
+		setDate(new Date());
+	}
+	useEffect(() => {
+		const timerId = setInterval(refreshClock, 1000);
+		return function cleanup() {
+			clearInterval(timerId);
+		};
+	}, []);
+
 	return (
 		<div className={styles.app}>
 			<div className={styles.app__wrapper}>
@@ -14,7 +27,7 @@ function App() {
 						<a href="#">Archive</a>
 					</div>
 				</nav>
-				<div className={styles.currentTime}>21:00</div>
+				<div className={styles.currentTime}>{date.toLocaleTimeString()}</div>
 				<div className={styles.content}>
 					<Trading />
 					{/* <Archive /> */}
