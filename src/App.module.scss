@@ -1,0 +1,60 @@
+.app {
+	width: 100%;
+	height: 100vh;
+	font-family: "Arial";
+	background-image: url("./images/wallpaper.jpg");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+
+.app__wrapper {
+	position: relative;
+	transform: translate(0%, 10%);
+	text-align: center;
+	width: 800px;
+	height: 800px;
+	background-color: rgb(10, 14, 19, 0.7);
+	color: white;
+	margin-left: auto;
+	margin-right: auto;
+	border: 0px solid #181818;
+	border-radius: 20px;
+	-webkit-box-shadow: 0px 0px 30px 10px rgba(255, 255, 255, 0.1);
+	-moz-box-shadow: 0px 0px 30px 10px rgba(255, 255, 255, 0.1);
+	box-shadow: 0px 0px 30px 10px rgba(255, 255, 255, 0.1);
+	backdrop-filter: blur(20px);
+}
+
+nav {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	background-color: #1b2531;
+	border: 0px solid #181818;
+	border-radius: 20px;
+	height: 200px;
+	.nav__element {
+		margin-left: 40px;
+		margin-right: 40px;
+		margin-top: 20px;
+		a {
+			color: #4484cf;
+			text-transform: uppercase;
+			font-size: 1.5rem;
+		}
+	}
+}
+
+.currentTime {
+	height: 50px;
+	position: relative;
+	bottom: 140px;
+	font-size: 4rem;
+}
+
+.content {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}

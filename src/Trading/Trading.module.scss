@@ -1,0 +1,126 @@
+.Trading {
+	width: 100%;
+	height: 550px;
+	border: 0px solid #181818;
+	border-radius: 20px;
+	display: flex;
+	flex-direction: column;
+	background-color: #1b2531;
+	// justify-content: space-between;
+	// align-items: center;
+	.select {
+		margin-top: 35px;
+		margin-bottom: 70px;
+		width: 300px;
+		height: 80px;
+		margin-left: auto;
+		margin-right: auto;
+		select {
+			font-family: "Arial";
+			width: 100%;
+			cursor: pointer;
+			padding: 14px 25px;
+			outline: 0;
+			border: 1px solid #7b7b7b;
+			border-radius: 100px;
+			background: #e6e6e6;
+			color: #7b7b7b;
+			appearance: none;
+			-webkit-appearance: none;
+			-moz-appearance: none;
+		}
+		select:hover {
+			color: #000000;
+			background: #cccccc;
+		}
+		select:disabled {
+			opacity: 0.5;
+			pointer-events: none;
+		}
+		.selectArrow {
+			position: absolute;
+			cursor: pointer;
+			top: 500px;
+			right: 270px;
+			width: 18px;
+			height: 18px;
+			border: solid #7b7b7b;
+			border-width: 0 5px 5px 0;
+			display: inline-block;
+			padding: 3px;
+			transform: rotate(45deg);
+			-webkit-transform: rotate(45deg);
+			pointer-events: none;
+		}
+	}
+}
+
+.activeLine {
+	position: absolute;
+	top: 70px;
+	left: 38px;
+	width: 110px;
+	height: 2px;
+	background-color: white;
+	border-radius: 1px;
+	-webkit-box-shadow: 0px 0px 30px 10px rgba(255, 255, 255, 0.1);
+	-moz-box-shadow: 0px 0px 30px 10px rgba(255, 255, 255, 0.1);
+	box-shadow: 0px 0px 30px 10px rgba(255, 255, 255, 0.1);
+}
+
+.price {
+	display: flex;
+	height: 200px;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	.priceButtons {
+		font-size: 6rem;
+	}
+	.verticalLine {
+		width: 1px;
+		height: 100px;
+		background-color: white;
+	}
+	.price__buy {
+		margin-left: 40px;
+		color: #18b33e;
+	}
+	.price__sell {
+		margin-right: 40px;
+		color: red;
+	}
+}
+
+.tradeButtons {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	button {
+		width: 300px;
+		height: 120px;
+		border: 0;
+		font-size: 3rem;
+		text-transform: uppercase;
+	}
+	button:hover {
+		cursor: pointer;
+		-webkit-box-shadow: 0px 0px 30px 10px rgba(255, 255, 255, 0.1);
+		-moz-box-shadow: 0px 0px 30px 10px rgba(255, 255, 255, 0.1);
+		box-shadow: 0px 0px 30px 10px rgba(255, 255, 255, 0.1);
+	}
+	button:active {
+		transform: scale(0.99);
+		cursor: pointer;
+	}
+	.tradeButtons__buy {
+		border-bottom-left-radius: 20px;
+		margin-left: 50px;
+		background-color: #18b33e;
+	}
+	.tradeButtons__sell {
+		border-bottom-right-radius: 20px;
+		margin-right: 50px;
+		background-color: red;
+	}
+}
