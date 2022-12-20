@@ -1,3 +1,31 @@
 .Archive {
-	width: 200px;
+	width: 100%;
+	height: 530px;
+	border: 0px solid #181818;
+	border-radius: 20px;
+	border-bottom: 20px solid #1b2531;
+	border-top: 20px solid #1b2531;
+	display: flex;
+	flex-direction: column;
+	background-color: #1b2531;
+	overflow: scroll;
+}
+table {
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+// table {
+// 	border: 1px solid #b3adad;
+// 	border-collapse: collapse;
+// 	padding: 5px;
+// }
+table th {
+	padding: 5px;
+}
+table td {
+	// border: 1px solid #b3adad;
+	text-align: center;
+	padding: 5px;
+	color: white;
 }

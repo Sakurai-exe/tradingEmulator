@@ -10,7 +10,6 @@ function Trading() {
 	};
 	return (
 		<div className={styles.Trading}>
-			<div className={styles.activeLine}></div>
 			<div className={styles.price}>
 				<div className={price__buy}>1.5766</div>
 				<div className={styles.verticalLine}></div>

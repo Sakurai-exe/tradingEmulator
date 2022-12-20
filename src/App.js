@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styles from "./App.module.scss";
 import Archive from "./Archive/Archive";
 import Trading from "./Trading/Trading";
@@ -23,10 +23,24 @@ function App() {
 			<div className={styles.app__wrapper}>
 				<nav>
 					<div className={styles.nav__element}>
-						<Link to="/">Trading</Link>
+						<NavLink
+							to="/"
+							className={({ isActive }) =>
+								isActive ? styles.active : styles.notActive
+							}
+						>
+							Trading
+						</NavLink>
 					</div>
 					<div className={styles.nav__element}>
-						<Link to="archive">Archive</Link>
+						<NavLink
+							to="archive"
+							className={({ isActive }) =>
+								isActive ? styles.active : styles.notActive
+							}
+						>
+							Archive
+						</NavLink>
 					</div>
 				</nav>
 				<div className={styles.currentTime}>{date.toLocaleTimeString()}</div>
