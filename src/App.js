@@ -1,5 +1,7 @@
+import { Routes, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "./App.module.scss";
-// import Archive from "./Archive/Archive";
+import Archive from "./Archive/Archive";
 import Trading from "./Trading/Trading";
 import { useState, useEffect } from "react";
 
@@ -21,16 +23,18 @@ function App() {
 			<div className={styles.app__wrapper}>
 				<nav>
 					<div className={styles.nav__element}>
-						<a href="#">Trading</a>
+						<Link to="/">Trading</Link>
 					</div>
 					<div className={styles.nav__element}>
-						<a href="#">Archive</a>
+						<Link to="archive">Archive</Link>
 					</div>
 				</nav>
 				<div className={styles.currentTime}>{date.toLocaleTimeString()}</div>
 				<div className={styles.content}>
-					<Trading />
-					{/* <Archive /> */}
+					<Routes>
+						<Route path="/" element={<Trading />} />
+						<Route path="archive" element={<Archive />} />
+					</Routes>
 				</div>
 			</div>
 		</div>
