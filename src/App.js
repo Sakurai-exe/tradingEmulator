@@ -46,7 +46,7 @@ function App() {
 				<div className={styles.currentTime}>{date.toLocaleTimeString()}</div>
 				<div className={styles.content}>
 					<Routes>
-						<Route path="/" element={<Trading />} />
+						<Route path="/" element={<Trading props={date} />} />
 						<Route path="archive" element={<Archive />} />
 					</Routes>
 				</div>
