@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	USD_EURgenBuyAction,
@@ -14,7 +14,6 @@ import {
 	RUR_EURgenSellAction,
 	EUR_RURgenSellAction,
 } from "../store/Actions";
-import { randomRoll } from "../store/Randomizer";
 import { slashRemover } from "../store/SlashRemover";
 import styles from "./Trading.module.scss";
 
@@ -23,14 +22,17 @@ function Trading(props) {
 	const price__buy = styles.price__buy + " " + styles.priceButtons;
 	const price__sell = styles.price__sell + " " + styles.priceButtons;
 	const [rerender, setRerender] = useState(false);
-	const [selectValue, setSelectValue] = useState("USDEUR");
+	const [prefix, setPrefix] = useState("USDEUR");
+	const [popupPrefix, setPopupPrefix] = useState("USD/EUR TOM");
 	const [buy, setBuy] = useState(1.0631);
 	const [sell, setSell] = useState(1.0628);
-	const handleTEst = e => {
-		const targetValue = String(e.target.value);
-		const s = slashRemover(targetValue.slice(0, -3)).trim();
-		setSelectValue(s);
-	};
+	const [operation, setOperation] = useState("BUY");
+	const [operationColor, setOperationColor] = useState({});
+	const [volume, setVolume] = useState(1);
+	const [zIndexStyle, setZindexStyle] = useState({
+		zIndex: -3,
+		visibility: "hidden",
+	});
 	const USDEURBuy = useSelector(state => state.buy.USDEUR_b);
 	const USDEURSell = useSelector(state => state.sell.USDEUR_s);
 	const EURUSDBuy = useSelector(state => state.buy.EURUSD_b);
@@ -44,6 +46,13 @@ function Trading(props) {
 	const EURRURBuy = useSelector(state => state.buy.EURRUR_b);
 	const EURRURSell = useSelector(state => state.sell.EURRUR_s);
 
+	const handleSetPrefix = e => {
+		const targetValue = String(e.target.value);
+		const s = slashRemover(targetValue.slice(0, -3)).trim();
+		setPrefix(s);
+		setPopupPrefix(targetValue);
+	};
+
 	const handlePriceRender = () => {
 		const buySell = new Map();
 		buySell.set("USDEUR", [USDEURBuy, USDEURSell]);
@@ -52,43 +61,83 @@ function Trading(props) {
 		buySell.set("USDRUR", [USDRURBuy, USDRURSell]);
 		buySell.set("RUREUR", [RUREURBuy, RUREURSell]);
 		buySell.set("EURRUR", [EURRURBuy, EURRURSell]);
-		const keyBuySell = buySell.get(selectValue);
+		const keyBuySell = buySell.get(prefix);
 		setBuy(keyBuySell[0]);
 		setSell(keyBuySell[1]);
 	};
+
 	const BuyActionHandler = () => {
-		if (selectValue === "USDEUR") {
+		if (prefix === "USDEUR") {
 			dispatch(USD_EURgenBuyAction());
-		} else if (selectValue === "EURUSD") {
+		} else if (prefix === "EURUSD") {
 			dispatch(EUR_USDgenBuyAction());
-		} else if (selectValue === "RURUSD") {
+		} else if (prefix === "RURUSD") {
 			dispatch(RUR_USDgenBuyAction());
-		} else if (selectValue === "USDRUR") {
+		} else if (prefix === "USDRUR") {
 			dispatch(USD_RURgenBuyAction());
-		} else if (selectValue === "RUREUR") {
+		} else if (prefix === "RUREUR") {
 			dispatch(RUR_EURgenBuyAction());
-		} else if (selectValue === "EURRUR") {
+		} else if (prefix === "EURRUR") {
 			dispatch(EUR_RURgenBuyAction());
 		} else return undefined;
-		// handlePriceRender();
 		setRerender(!rerender);
 	};
+
 	const SellActionHandler = () => {
-		if (selectValue === "USDEUR") {
+		if (prefix === "USDEUR") {
 			dispatch(USD_EURgenSellAction());
-		} else if (selectValue === "EURUSD") {
+		} else if (prefix === "EURUSD") {
 			dispatch(EUR_USDgenSellAction());
-		} else if (selectValue === "RURUSD") {
+		} else if (prefix === "RURUSD") {
 			dispatch(RUR_USDgenSellAction());
-		} else if (selectValue === "USDRUR") {
+		} else if (prefix === "USDRUR") {
 			dispatch(USD_RURgenSellAction());
-		} else if (selectValue === "RUREUR") {
+		} else if (prefix === "RUREUR") {
 			dispatch(RUR_EURgenSellAction());
-		} else if (selectValue === "EURRUR") {
+		} else if (prefix === "EURRUR") {
 			dispatch(EUR_RURgenSellAction());
 		} else return undefined;
-		// handlePriceRender();
 	};
+
+	const handlePopUp = e => {
+		setZindexStyle({
+			zIndex: 2,
+			visibility: "visible",
+		});
+		setOperation(String(e.target.value));
+		if (String(e.target.value) === "BUY") {
+			setOperationColor(styles.buyColor);
+		} else if (String(e.target.value) === "SELL")
+			setOperationColor(styles.sellColor);
+		else setOperationColor(null);
+	};
+	const handleClosePopup = () => {
+		setZindexStyle({
+			zIndex: -3,
+			visibility: "hidden",
+		});
+		setVolume(1);
+	};
+	const handleSubmit = () => {
+		setZindexStyle({
+			zIndex: -3,
+			visibility: "hidden",
+		});
+		setVolume(1);
+	};
+
+	const volumeChangeAlways = e => {
+		let number = Math.trunc(e.target.value);
+		let array = [...number.toString()].map(Number);
+		if (array.length > 7 || e.target.value > 9999999) {
+			setVolume(9999999);
+		} else if (array.length < 0 || e.target.value < 0) {
+			setVolume(1);
+		} else {
+			setVolume(e.target.value);
+		}
+	};
+
 	useEffect(() => {
 		let randomIntervalBuy = Math.random() * (5000 - 2000) + 2000;
 		let randomIntervalSell = Math.random() * (4000 - 500) + 500;
@@ -101,15 +150,7 @@ function Trading(props) {
 			clearInterval(timerSell);
 		};
 	}, [rerender]);
-	// useEffect(() => {
-	// 	let randomIntervalSell = randomRoll(2000, 3000);
-	// 	const timerSell = setInterval(SellActionHandler, randomIntervalSell);
-	// 	console.log("2");
-	// 	handlePriceRender();
-	// 	return function cleanup() {
-	// 		clearInterval(timerSell);
-	// 	};
-	// }, [rerender]);
+
 	return (
 		<div className={styles.Trading}>
 			<div className={styles.price}>
@@ -118,7 +159,7 @@ function Trading(props) {
 				<div className={price__sell}>{sell}</div>
 			</div>
 			<div className={styles.select}>
-				<select onChange={handleTEst} onMouseLeave={handlePriceRender}>
+				<select onChange={handleSetPrefix} onMouseLeave={handlePriceRender}>
 					<option>EUR/USD TOM</option>
 					<option>RUR/USD TOM</option>
 					<option>USD/RUR TOM</option>
@@ -130,8 +171,59 @@ function Trading(props) {
 			</div>
 
 			<div className={styles.tradeButtons}>
-				<button className={styles.tradeButtons__buy}>Buy</button>
-				<button className={styles.tradeButtons__sell}>Sell</button>
+				<button
+					className={styles.tradeButtons__buy}
+					value={"BUY"}
+					onClick={handlePopUp}
+				>
+					Buy
+				</button>
+				<div className={styles.popup} style={zIndexStyle}>
+					<div className={styles.popup__title}>Make order</div>
+					<div className={operationColor}>
+						<span>{operation}</span> {buy} {popupPrefix}
+					</div>
+					<br />
+					<span>
+						Volume{" "}
+						<input
+							type="number"
+							name="volume"
+							value={volume}
+							min={1}
+							maxLength="7"
+							onChange={volumeChangeAlways}
+							required
+						/>
+					</span>
+					<div className={styles.popup__buttons}>
+						<button
+							className={[
+								styles.popupButtons__cancelBtn,
+								styles.popupButtons__button,
+							].join(" ")}
+							onClick={handleClosePopup}
+						>
+							CANCEL
+						</button>
+						<button
+							className={[
+								styles.popupButtons__okBtn,
+								styles.popupButtons__button,
+							].join(" ")}
+							onClick={handleSubmit}
+						>
+							OK
+						</button>
+					</div>
+				</div>
+				<button
+					className={styles.tradeButtons__sell}
+					value={"SELL"}
+					onClick={handlePopUp}
+				>
+					Sell
+				</button>
 			</div>
 		</div>
 	);

@@ -6,8 +6,6 @@
 	display: flex;
 	flex-direction: column;
 	background-color: #1b2531;
-	// justify-content: space-between;
-	// align-items: center;
 	.select {
 		margin-top: 35px;
 		margin-bottom: 70px;
@@ -55,19 +53,6 @@
 	}
 }
 
-// .activeLine {
-// 	position: absolute;
-// 	top: 70px;
-// 	left: 48px;
-// 	width: 110px;
-// 	height: 2px;
-// 	background-color: white;
-// 	border-radius: 1px;
-// 	-webkit-box-shadow: 0px 0px 30px 10px rgba(255, 255, 255, 0.1);
-// 	-moz-box-shadow: 0px 0px 30px 10px rgba(255, 255, 255, 0.1);
-// 	box-shadow: 0px 0px 30px 10px rgba(255, 255, 255, 0.1);
-// }
-
 .price {
 	display: flex;
 	height: 200px;
@@ -83,11 +68,11 @@
 		background-color: white;
 	}
 	.price__buy {
-		margin-left: 40px;
+		margin-left: 50px;
 		color: #18b33e;
 	}
 	.price__sell {
-		margin-right: 40px;
+		margin-right: 50px;
 		color: red;
 	}
 }
@@ -122,5 +107,90 @@
 		border-bottom-right-radius: 20px;
 		margin-right: 50px;
 		background-color: red;
+	}
+}
+
+.popup {
+	position: absolute;
+	z-index: -3;
+	visibility: hidden;
+	top: 180px;
+	left: 175px;
+	width: 450px;
+	height: 350px;
+	padding: 20px;
+	background-color: rgb(10, 14, 19, 0.4);
+	border: 0px solid #181818;
+	border-radius: 20px;
+	-webkit-box-shadow: 0px 0px 30px 10px rgba(255, 255, 255, 0.1);
+	-moz-box-shadow: 0px 0px 30px 10px rgba(255, 255, 255, 0.1);
+	box-shadow: 0px 0px 30px 10px rgba(255, 255, 255, 0.1);
+	backdrop-filter: blur(20px);
+	text-align: center;
+
+	.popup__title {
+		color: #4484cf;
+		text-shadow: 0px 0px 4px rgba(69, 247, 255, 0.29);
+		font-size: 2rem;
+		margin-bottom: 50px;
+	}
+	span {
+		font-size: 1.5rem;
+		input {
+			height: 30px;
+			outline: 0;
+		}
+	}
+	.popup__buttons {
+		// position: relative;
+		display: flex;
+		flex-direction: row;
+		height: 50px;
+		margin-top: 50px;
+		.popupButtons__button {
+			font-size: 1rem;
+			width: 110px;
+			height: 50px;
+			border-radius: 42px;
+			display: inline-block;
+			cursor: pointer;
+			color: #ffffff;
+			padding: 10px 20px;
+			text-decoration: none;
+		}
+		.popupButtons__okBtn {
+			background-color: #4484cf;
+			margin-left: 40px;
+			// box-shadow: 0px 0px 10px 1px #3dc21b;
+			// background-color: #44c767;
+			// text-shadow: 0px 1px 0px #2f6627;
+		}
+		.popupButtons__okBtn:hover {
+			box-shadow: 0px 0px 10px 1px #4484cf;
+			// background-color: #44c767;
+			text-shadow: 0px 1px 0px #4484cf;
+		}
+		.popupButtons__cancelBtn {
+			background-color: grey;
+			margin-left: 120px;
+		}
+		.popupButtons__cancelBtn:hover {
+			box-shadow: 0px 0px 5px 1px grey;
+		}
+	}
+}
+
+.buyColor {
+	font-size: 1.5rem;
+	span {
+		color: #18b33e;
+		font-size: 1.5rem;
+	}
+}
+.sellColor {
+	font-size: 1.5rem;
+	span {
+		color: red;
+		font-size: 1.5rem;
 	}
 }

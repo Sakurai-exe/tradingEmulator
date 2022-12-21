@@ -8,9 +8,10 @@ import { useState, useEffect } from "react";
 function App() {
 	const [date, setDate] = useState(new Date());
 
-	function refreshClock() {
+	const refreshClock = () => {
 		setDate(new Date());
-	}
+	};
+
 	useEffect(() => {
 		const timerId = setInterval(refreshClock, 1000);
 		return function cleanup() {

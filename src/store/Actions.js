@@ -15,6 +15,7 @@ import {
 	SET_RUR_EUR_S,
 	SET_EUR_RUR_S,
 } from "./SellReducer";
+import { ADD_NEW_ARCHIVE } from "./ArchiveReducer";
 
 //BuyReducer Actions:
 export const USD_EURgenBuyAction = () => {
@@ -91,3 +92,18 @@ export const EUR_RURgenSellAction = () => {
 		payload: randomRoll(65, 77),
 	};
 };
+
+//Archive
+export const addNewArchive = label => {
+	return {
+		type: ADD_NEW_ARCHIVE,
+		payload: {
+			side,
+			price,
+			instrument,
+			volume,
+			timestamp,
+		},
+	};
+};
+ADD_NEW_ARCHIVE;
