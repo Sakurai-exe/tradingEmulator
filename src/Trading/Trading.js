@@ -13,12 +13,15 @@ import {
 	USD_RURgenSellAction,
 	RUR_EURgenSellAction,
 	EUR_RURgenSellAction,
+	addNewArchiveAction,
 } from "../store/Actions";
 import { slashRemover } from "../store/SlashRemover";
 import styles from "./Trading.module.scss";
 
 function Trading(props) {
 	const dispatch = useDispatch();
+	const timestamp = props.props;
+	const [price, setPrice] = useState();
 	const price__buy = styles.price__buy + " " + styles.priceButtons;
 	const price__sell = styles.price__sell + " " + styles.priceButtons;
 	const [rerender, setRerender] = useState(false);
@@ -45,8 +48,17 @@ function Trading(props) {
 	const RUREURSell = useSelector(state => state.sell.RUREUR_s);
 	const EURRURBuy = useSelector(state => state.buy.EURRUR_b);
 	const EURRURSell = useSelector(state => state.sell.EURRUR_s);
+	const buySell = new Map();
+	buySell.set("USDEUR", [USDEURBuy, USDEURSell]);
+	buySell.set("EURUSD", [EURUSDBuy, EURUSDSell]);
+	buySell.set("RURUSD", [RURUSDBuy, RURUSDSell]);
+	buySell.set("USDRUR", [USDRURBuy, USDRURSell]);
+	buySell.set("RUREUR", [RUREURBuy, RUREURSell]);
+	buySell.set("EURRUR", [EURRURBuy, EURRURSell]);
+	const keyBuySell = buySell.get(prefix);
 
 	const handleSetPrefix = e => {
+		handlePriceRender();
 		const targetValue = String(e.target.value);
 		const s = slashRemover(targetValue.slice(0, -3)).trim();
 		setPrefix(s);
@@ -54,16 +66,11 @@ function Trading(props) {
 	};
 
 	const handlePriceRender = () => {
-		const buySell = new Map();
-		buySell.set("USDEUR", [USDEURBuy, USDEURSell]);
-		buySell.set("EURUSD", [EURUSDBuy, EURUSDSell]);
-		buySell.set("RURUSD", [RURUSDBuy, RURUSDSell]);
-		buySell.set("USDRUR", [USDRURBuy, USDRURSell]);
-		buySell.set("RUREUR", [RUREURBuy, RUREURSell]);
-		buySell.set("EURRUR", [EURRURBuy, EURRURSell]);
-		const keyBuySell = buySell.get(prefix);
 		setBuy(keyBuySell[0]);
 		setSell(keyBuySell[1]);
+		if (operation === "BUY") {
+			setPrice(keyBuySell[0]);
+		} else if (operation === "SELL") setPrice(keyBuySell[1]);
 	};
 
 	const BuyActionHandler = () => {
@@ -97,6 +104,7 @@ function Trading(props) {
 		} else if (prefix === "EURRUR") {
 			dispatch(EUR_RURgenSellAction());
 		} else return undefined;
+		setRerender(!rerender);
 	};
 
 	const handlePopUp = e => {
@@ -104,6 +112,7 @@ function Trading(props) {
 			zIndex: 2,
 			visibility: "visible",
 		});
+
 		setOperation(String(e.target.value));
 		if (String(e.target.value) === "BUY") {
 			setOperationColor(styles.buyColor);
@@ -118,7 +127,19 @@ function Trading(props) {
 		});
 		setVolume(1);
 	};
+	const addArchive = (side, price, instrument, volume, timestamp) => {
+		const archive = {
+			side,
+			price,
+			instrument,
+			volume,
+			timestamp,
+		};
+		// console.log(archive);
+		dispatch(addNewArchiveAction(archive));
+	};
 	const handleSubmit = () => {
+		addArchive(operation, price, popupPrefix, volume, timestamp);
 		setZindexStyle({
 			zIndex: -3,
 			visibility: "hidden",
@@ -139,11 +160,10 @@ function Trading(props) {
 	};
 
 	useEffect(() => {
-		let randomIntervalBuy = Math.random() * (5000 - 2000) + 2000;
-		let randomIntervalSell = Math.random() * (4000 - 500) + 500;
+		const randomIntervalBuy = Math.random() * (4000 - 2000) + 2000;
+		const randomIntervalSell = Math.random() * (4000 - 500) + 500;
 		const timerBuy = setInterval(BuyActionHandler, randomIntervalBuy);
 		const timerSell = setInterval(SellActionHandler, randomIntervalSell);
-		console.log("1");
 		handlePriceRender();
 		return function cleanup() {
 			clearInterval(timerBuy);
@@ -159,7 +179,7 @@ function Trading(props) {
 				<div className={price__sell}>{sell}</div>
 			</div>
 			<div className={styles.select}>
-				<select onChange={handleSetPrefix} onMouseLeave={handlePriceRender}>
+				<select onChange={handleSetPrefix}>
 					<option>EUR/USD TOM</option>
 					<option>RUR/USD TOM</option>
 					<option>USD/RUR TOM</option>
@@ -178,10 +198,11 @@ function Trading(props) {
 				>
 					Buy
 				</button>
+
 				<div className={styles.popup} style={zIndexStyle}>
 					<div className={styles.popup__title}>Make order</div>
 					<div className={operationColor}>
-						<span>{operation}</span> {buy} {popupPrefix}
+						<span>{operation}</span> {price} {popupPrefix}
 					</div>
 					<br />
 					<span>

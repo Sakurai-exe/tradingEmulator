@@ -7,7 +7,6 @@ import { useState, useEffect } from "react";
 
 function App() {
 	const [date, setDate] = useState(new Date());
-
 	const refreshClock = () => {
 		setDate(new Date());
 	};
@@ -47,7 +46,16 @@ function App() {
 				<div className={styles.currentTime}>{date.toLocaleTimeString()}</div>
 				<div className={styles.content}>
 					<Routes>
-						<Route path="/" element={<Trading props={date} />} />
+						<Route
+							path="/"
+							element={
+								<Trading
+									props={String(
+										date.toLocaleDateString() + " " + date.toLocaleTimeString()
+									)}
+								/>
+							}
+						/>
 						<Route path="archive" element={<Archive />} />
 					</Routes>
 				</div>

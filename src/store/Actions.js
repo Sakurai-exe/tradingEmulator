@@ -94,16 +94,9 @@ export const EUR_RURgenSellAction = () => {
 };
 
 //Archive
-export const addNewArchive = label => {
+export const addNewArchiveAction = payload => {
 	return {
 		type: ADD_NEW_ARCHIVE,
-		payload: {
-			side,
-			price,
-			instrument,
-			volume,
-			timestamp,
-		},
+		payload,
 	};
 };
-ADD_NEW_ARCHIVE;
