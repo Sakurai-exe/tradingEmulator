@@ -7,7 +7,7 @@ function Archive() {
 
 	let res = archiveItems.map(function (item) {
 		return (
-			<tr>
+			<tr key={item.timestamp}>
 				<td>{item.side}</td>
 				<td>{item.price}</td>
 				<td>{item.instrument}</td>
@@ -16,9 +16,6 @@ function Archive() {
 			</tr>
 		);
 	});
-	// if (archiveItems <= 0) {
-	// 	res = <div className={styles.emptyArchive}>Archive is empty!</div>;
-	// }
 	return (
 		<div className={styles.Archive}>
 			{archiveItems.length > 0 ? (

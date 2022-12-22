@@ -58,53 +58,17 @@ function Trading(props) {
 	const keyBuySell = buySell.get(prefix);
 
 	const handleSetPrefix = e => {
-		handlePriceRender();
 		const targetValue = String(e.target.value);
 		const s = slashRemover(targetValue.slice(0, -3)).trim();
 		setPrefix(s);
 		setPopupPrefix(targetValue);
 	};
-
 	const handlePriceRender = () => {
 		setBuy(keyBuySell[0]);
 		setSell(keyBuySell[1]);
 		if (operation === "BUY") {
 			setPrice(keyBuySell[0]);
 		} else if (operation === "SELL") setPrice(keyBuySell[1]);
-	};
-
-	const BuyActionHandler = () => {
-		if (prefix === "USDEUR") {
-			dispatch(USD_EURgenBuyAction());
-		} else if (prefix === "EURUSD") {
-			dispatch(EUR_USDgenBuyAction());
-		} else if (prefix === "RURUSD") {
-			dispatch(RUR_USDgenBuyAction());
-		} else if (prefix === "USDRUR") {
-			dispatch(USD_RURgenBuyAction());
-		} else if (prefix === "RUREUR") {
-			dispatch(RUR_EURgenBuyAction());
-		} else if (prefix === "EURRUR") {
-			dispatch(EUR_RURgenBuyAction());
-		} else return undefined;
-		setRerender(!rerender);
-	};
-
-	const SellActionHandler = () => {
-		if (prefix === "USDEUR") {
-			dispatch(USD_EURgenSellAction());
-		} else if (prefix === "EURUSD") {
-			dispatch(EUR_USDgenSellAction());
-		} else if (prefix === "RURUSD") {
-			dispatch(RUR_USDgenSellAction());
-		} else if (prefix === "USDRUR") {
-			dispatch(USD_RURgenSellAction());
-		} else if (prefix === "RUREUR") {
-			dispatch(RUR_EURgenSellAction());
-		} else if (prefix === "EURRUR") {
-			dispatch(EUR_RURgenSellAction());
-		} else return undefined;
-		setRerender(!rerender);
 	};
 
 	const handlePopUp = e => {
@@ -135,7 +99,6 @@ function Trading(props) {
 			volume,
 			timestamp,
 		};
-		// console.log(archive);
 		dispatch(addNewArchiveAction(archive));
 	};
 	const handleSubmit = () => {
@@ -160,8 +123,40 @@ function Trading(props) {
 	};
 
 	useEffect(() => {
-		const randomIntervalBuy = Math.random() * (4000 - 2000) + 2000;
-		const randomIntervalSell = Math.random() * (4000 - 500) + 500;
+		const BuyActionHandler = () => {
+			if (prefix === "USDEUR") {
+				dispatch(USD_EURgenBuyAction());
+			} else if (prefix === "EURUSD") {
+				dispatch(EUR_USDgenBuyAction());
+			} else if (prefix === "RURUSD") {
+				dispatch(RUR_USDgenBuyAction());
+			} else if (prefix === "USDRUR") {
+				dispatch(USD_RURgenBuyAction());
+			} else if (prefix === "RUREUR") {
+				dispatch(RUR_EURgenBuyAction());
+			} else if (prefix === "EURRUR") {
+				dispatch(EUR_RURgenBuyAction());
+			} else return undefined;
+			setRerender(!rerender);
+		};
+		const SellActionHandler = () => {
+			if (prefix === "USDEUR") {
+				dispatch(USD_EURgenSellAction());
+			} else if (prefix === "EURUSD") {
+				dispatch(EUR_USDgenSellAction());
+			} else if (prefix === "RURUSD") {
+				dispatch(RUR_USDgenSellAction());
+			} else if (prefix === "USDRUR") {
+				dispatch(USD_RURgenSellAction());
+			} else if (prefix === "RUREUR") {
+				dispatch(RUR_EURgenSellAction());
+			} else if (prefix === "EURRUR") {
+				dispatch(EUR_RURgenSellAction());
+			} else return undefined;
+			setRerender(!rerender);
+		};
+		const randomIntervalBuy = Math.random() * (4000 - 500) + 500;
+		const randomIntervalSell = Math.random() * (4000 - 1000) + 1000;
 		const timerBuy = setInterval(BuyActionHandler, randomIntervalBuy);
 		const timerSell = setInterval(SellActionHandler, randomIntervalSell);
 		handlePriceRender();
@@ -169,7 +164,7 @@ function Trading(props) {
 			clearInterval(timerBuy);
 			clearInterval(timerSell);
 		};
-	}, [rerender]);
+	}, [rerender, prefix, operation]);
 
 	return (
 		<div className={styles.Trading}>
@@ -179,13 +174,13 @@ function Trading(props) {
 				<div className={price__sell}>{sell}</div>
 			</div>
 			<div className={styles.select}>
-				<select onChange={handleSetPrefix}>
+				<select onChange={handleSetPrefix} defaultValue={"USD/EUR TOM"}>
 					<option>EUR/USD TOM</option>
+					<option>USD/EUR TOM</option>
 					<option>RUR/USD TOM</option>
 					<option>USD/RUR TOM</option>
 					<option>RUR/EUR TOM</option>
 					<option>EUR/RUR TOM</option>
-					<option selected>USD/EUR TOM</option>
 				</select>
 				<div className={styles.selectArrow}></div>
 			</div>

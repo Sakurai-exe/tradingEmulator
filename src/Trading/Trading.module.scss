@@ -8,7 +8,7 @@
 	background-color: #1b2531;
 	.select {
 		margin-top: 35px;
-		margin-bottom: 70px;
+		margin-bottom: 45px;
 		width: 300px;
 		height: 80px;
 		margin-left: auto;
@@ -63,8 +63,11 @@
 		font-size: 5rem;
 	}
 	.verticalLine {
+		position: absolute;
 		width: 1px;
 		height: 100px;
+		top: 310px;
+		left: 400px;
 		background-color: white;
 	}
 	.price__buy {

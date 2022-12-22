@@ -51,7 +51,9 @@ function App() {
 							element={
 								<Trading
 									props={String(
-										date.toLocaleDateString() + " " + date.toLocaleTimeString()
+										date.toLocaleDateString("ru-ru") +
+											" " +
+											date.toLocaleTimeString()
 									)}
 								/>
 							}
