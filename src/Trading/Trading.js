@@ -31,7 +31,7 @@ function Trading(props) {
 	const [sell, setSell] = useState(1.0628);
 	const [operation, setOperation] = useState("BUY");
 	const [operationColor, setOperationColor] = useState({});
-	const [volume, setVolume] = useState(1);
+	const [volume, setVolume] = useState();
 	const [zIndexStyle, setZindexStyle] = useState({
 		zIndex: -3,
 		visibility: "hidden",
@@ -114,19 +114,23 @@ function Trading(props) {
 		dispatch(addNewArchiveAction(archive));
 	};
 	const handleSubmit = () => {
-		addArchive(operation, price, popupPrefix, volume, timestamp);
-		setZindexStyle({
-			zIndex: -3,
-			visibility: "hidden",
-		});
-		setzIndexBackgroundPopup({
-			zIndex: -3,
-			visibility: "hidden",
-		});
-		setVolume(1);
-		alert("Archive was created!");
+		if (isInteger(volume) && volume != 0) {
+			addArchive(operation, price, popupPrefix, volume, timestamp);
+			setZindexStyle({
+				zIndex: -3,
+				visibility: "hidden",
+			});
+			setzIndexBackgroundPopup({
+				zIndex: -3,
+				visibility: "hidden",
+			});
+			setVolume(1);
+			alert("Archive was created!");
+		} else alert("Please enter a valid number!");
 	};
-
+	const isInteger = num => {
+		return num % 1 === 0;
+	};
 	const volumeChangeAlways = e => {
 		let number = Math.trunc(e.target.value);
 		let array = [...number.toString()].map(Number);
@@ -180,8 +184,8 @@ function Trading(props) {
 			} else return undefined;
 			setRerender(!rerender);
 		};
-		const randomIntervalBuy = Math.random() * (4000 - 500) + 500;
-		const randomIntervalSell = Math.random() * (4000 - 1000) + 1000;
+		const randomIntervalBuy = Math.random() * (1500 - 500) + 500;
+		const randomIntervalSell = Math.random() * (1500 - 1000) + 1000;
 		const timerBuy = setInterval(BuyActionHandler, randomIntervalBuy);
 		const timerSell = setInterval(SellActionHandler, randomIntervalSell);
 		handlePriceRender();
@@ -231,7 +235,6 @@ function Trading(props) {
 							type="number"
 							name="volume"
 							value={volume}
-							min={1}
 							maxLength="7"
 							onChange={volumeChangeAlways}
 							required
