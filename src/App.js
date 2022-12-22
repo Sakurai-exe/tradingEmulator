@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 
 function App() {
 	const [date, setDate] = useState(new Date());
+
 	const refreshClock = () => {
 		setDate(new Date());
 	};

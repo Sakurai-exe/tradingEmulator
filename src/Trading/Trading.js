@@ -36,6 +36,10 @@ function Trading(props) {
 		zIndex: -3,
 		visibility: "hidden",
 	});
+	const [zIndexBackgroundPopup, setzIndexBackgroundPopup] = useState({
+		zIndex: -3,
+		visibility: "hidden",
+	});
 	const USDEURBuy = useSelector(state => state.buy.USDEUR_b);
 	const USDEURSell = useSelector(state => state.sell.USDEUR_s);
 	const EURUSDBuy = useSelector(state => state.buy.EURUSD_b);
@@ -73,6 +77,10 @@ function Trading(props) {
 
 	const handlePopUp = e => {
 		setZindexStyle({
+			zIndex: 3,
+			visibility: "visible",
+		});
+		setzIndexBackgroundPopup({
 			zIndex: 2,
 			visibility: "visible",
 		});
@@ -86,6 +94,10 @@ function Trading(props) {
 	};
 	const handleClosePopup = () => {
 		setZindexStyle({
+			zIndex: -3,
+			visibility: "hidden",
+		});
+		setzIndexBackgroundPopup({
 			zIndex: -3,
 			visibility: "hidden",
 		});
@@ -107,7 +119,12 @@ function Trading(props) {
 			zIndex: -3,
 			visibility: "hidden",
 		});
+		setzIndexBackgroundPopup({
+			zIndex: -3,
+			visibility: "hidden",
+		});
 		setVolume(1);
+		alert("Archive was created!");
 	};
 
 	const volumeChangeAlways = e => {
@@ -120,6 +137,14 @@ function Trading(props) {
 		} else {
 			setVolume(e.target.value);
 		}
+	};
+
+	const handleBackgroundPopup = () => {
+		setzIndexBackgroundPopup({
+			zIndex: -3,
+			visibility: "hidden",
+		});
+		handleClosePopup();
 	};
 
 	useEffect(() => {
@@ -174,7 +199,7 @@ function Trading(props) {
 				<div className={price__sell}>{sell}</div>
 			</div>
 			<div className={styles.select}>
-				<select onChange={handleSetPrefix} defaultValue={"USD/EUR TOM"}>
+				<select onChange={handleSetPrefix} value={popupPrefix}>
 					<option>EUR/USD TOM</option>
 					<option>USD/EUR TOM</option>
 					<option>RUR/USD TOM</option>
@@ -233,6 +258,7 @@ function Trading(props) {
 						</button>
 					</div>
 				</div>
+
 				<button
 					className={styles.tradeButtons__sell}
 					value={"SELL"}
@@ -241,6 +267,11 @@ function Trading(props) {
 					Sell
 				</button>
 			</div>
+			<div
+				className={styles.backgroundPopup}
+				style={zIndexBackgroundPopup}
+				onClick={handleBackgroundPopup}
+			></div>
 		</div>
 	);
 }

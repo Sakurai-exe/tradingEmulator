@@ -5,7 +5,7 @@
 	border-radius: 20px;
 	display: flex;
 	flex-direction: column;
-	background-color: #1b2531;
+	background-color: rgb(10, 14, 19, 0.8);
 	.select {
 		margin-top: 35px;
 		margin-bottom: 45px;
@@ -145,7 +145,6 @@
 		}
 	}
 	.popup__buttons {
-		// position: relative;
 		display: flex;
 		flex-direction: row;
 		height: 50px;
@@ -164,13 +163,9 @@
 		.popupButtons__okBtn {
 			background-color: #4484cf;
 			margin-left: 40px;
-			// box-shadow: 0px 0px 10px 1px #3dc21b;
-			// background-color: #44c767;
-			// text-shadow: 0px 1px 0px #2f6627;
 		}
 		.popupButtons__okBtn:hover {
 			box-shadow: 0px 0px 10px 1px #4484cf;
-			// background-color: #44c767;
 			text-shadow: 0px 1px 0px #4484cf;
 		}
 		.popupButtons__cancelBtn {
@@ -196,4 +191,16 @@
 		color: red;
 		font-size: 1.5rem;
 	}
+}
+
+.backgroundPopup {
+	position: absolute;
+	z-index: -3;
+	transform: translate(-30%, -10%);
+	top: 0;
+	left: 0;
+	width: 200vw;
+	height: 200vh;
+	background-color: rgb(0, 0, 0, 0.8);
+	backdrop-filter: blur(20px);
 }
