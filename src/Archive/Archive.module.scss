@@ -9,6 +9,13 @@
 	flex-direction: column;
 	background-color: rgb(10, 14, 19, 0.8);
 	overflow: scroll;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+
+.Archive::-webkit-scrollbar {
+	width: 0;
+	height: 0;
 }
 table {
 	margin-left: 20px;

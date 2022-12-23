@@ -101,7 +101,7 @@ function Trading(props) {
 			zIndex: -3,
 			visibility: "hidden",
 		});
-		setVolume(1);
+		setVolume("");
 	};
 	const addArchive = (side, price, instrument, volume, timestamp) => {
 		const archive = {
@@ -124,7 +124,7 @@ function Trading(props) {
 				zIndex: -3,
 				visibility: "hidden",
 			});
-			setVolume(1);
+			setVolume("");
 			alert("Archive was created!");
 		} else alert("Please enter a valid number!");
 	};
@@ -137,7 +137,7 @@ function Trading(props) {
 		if (array.length > 7 || e.target.value > 9999999) {
 			setVolume(9999999);
 		} else if (array.length < 0 || e.target.value < 0) {
-			setVolume(1);
+			setVolume("");
 		} else {
 			setVolume(e.target.value);
 		}
