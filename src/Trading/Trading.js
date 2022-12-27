@@ -31,7 +31,7 @@ function Trading(props) {
 	const [sell, setSell] = useState(1.0628);
 	const [operation, setOperation] = useState("BUY");
 	const [operationColor, setOperationColor] = useState({});
-	const [volume, setVolume] = useState();
+	const [volume, setVolume] = useState("");
 	const [zIndexStyle, setZindexStyle] = useState({
 		zIndex: -3,
 		visibility: "hidden",
